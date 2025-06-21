@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Nilai Dodiklatpur Rindam XV/Pattimura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+
+        body {
+            background-image: url('https://iili.io/FxvZccg.md.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-color: #1a2a44;
+            font-family: 'Roboto Condensed', sans-serif;
+            color: white;
+        }
+        .overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .military-pattern {
+            background-image: linear-gradient(45deg, #1b2e1a 25%, #2f4b29 25%, #2f4b29 50%, #1b2e1a 50%, #1b2e1a 75%, #2f4b29 75%, #2f4b29);
+            background-size: 30px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .military-border {
+            border: 3px solid #2f4b29;
+            border-radius: 8px;
+        }
+        .logo-app {
+            max-width: 80px;
+            height: auto;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+        button {
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        .table-container {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        table {
+            min-width: 2000px;
+        }
+        th, td {
+            white-space: nowrap;
+        }
+        .input-container {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .input-container select,
+        .input-container input {
+            width: 128px;
+            font-size: 0.85rem;
+            background-color: #1a202c;
+            color: white;
+        }
+        input::placeholder, select {
+            color: white !important;
+        }
+        select option {
+            background-color: #1a202c;
+            color: white;
+        }
+        footer {
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto p-4 overlay">
+        <header class="military-pattern rounded-lg p-6 mb-6 flex items-center justify-center gap-6 military-border">
+            <img src="https://iili.io/FxvkDJt.png" alt="Logo Aplikasi Kiri" class="logo-app">
+            <h1 class="text-4xl font-bold text-center text-white">Aplikasi Data Nilai Dodiklatpur Rindam XV/Pattimura</h1>
+            <img src="https://iili.io/Fxw9se4.png" alt="Logo Aplikasi Kanan" class="logo-app">
+        </header>
+
+        <!-- Login Section -->
+        <div id="loginSection" class="bg-black bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md mx-auto mb-6 military-border">
+            <h2 class="text-xl font-semibold mb-4 text-center text-white">Login</h2>
+            <input id="passwordInput" type="password" placeholder="Masukkan kata sandi" class="w-full p-2 mb-4 rounded bg-gray-800 text-white military-border">
+            <button onclick="login()" class="w-full bg-green-900 hover:bg-green-950 text-white p-2 rounded military-border">Masuk</button>
+        </div>
+
+        <!-- Admin Section -->
+        <div id="adminSection" class="hidden">
+            <div class="bg-black bg-opacity-90 p-6 rounded-lg shadow-lg mb-6 military-border">
+                <h2 class="text-xl font-semibold mb-4 text-white">Input Data Excel</h2>
+                <input type="file" id="excelInput" accept=".xlsx,.xls" class="mb-4 text-white">
+                <button onclick="processExcel()" class="bg-green-900 hover:bg-green-950 text-white p-2 rounded military-border">Proses Excel</button>
+            </div>
+
+            <div class="bg-black bg-opacity-90 p-6 rounded-lg shadow-lg mb-6 military-border">
+                <h2 class="text-xl font-semibold mb-4 text-center text-white">Input Data Manual</h2>
+                <div class="input-container flex gap-2 mb-4">
+                    <input id="pendidikanInput" placeholder="Pendidikan" class="p-2 rounded military-border">
+                    <input id="namaInput" placeholder="Nama Siswa" class="p-2 rounded military-border">
+                    <input id="nosisInput" placeholder="Nosis" class="p-2 rounded military-border">
+                    <input id="pangkatInput" placeholder="Pangkat" class="p-2 rounded military-border">
+                    <input id="kelasInput" placeholder="Kelas/Ton/Kompi" class="p-2 rounded military-border">
+                    <select id="mataPelajaranInput" class="p-2 rounded military-border">
+                        <option value="">Pilih Mata Pelajaran</option>
+                        <option value="Studi Kasus">Studi Kasus</option>
+                        <option value="CMI">CMI</option>
+                        <option value="P3">P3</option>
+                        <option value="Nikpur">Nikpur</option>
+                        <option value="Navigasi">Navigasi</option>
+                        <option value="Offline Map">Offline Map</option>
+                        <option value="Taktik Gerilya">Taktik Gerilya</option>
+                        <option value="OLI">OLI</option>
+                        <option value="Patroli Gunung Hutan">Patroli Gunung Hutan</option>
+                        <option value="Patroli Medsus">Patroli Medsus</option>
+                        <option value="Baksi">Baksi</option>
+                        <option value="Baksi Lanjutan">Baksi Lanjutan</option>
+                        <option value="Bakpur Lanjutan">Bakpur Lanjutan</option>
+                        <option value="Nikgarlat">Nikgarlat</option>
+                        <option value="UTP">UTP</option>
+                        <option value="Perkemil">Perkemil</option>
+                        <option value="Limed">Limed</option>
+                        <option value="Renmil">Renmil</option>
+                        <option value="Ralasuntai">Ralasuntai</option>
+                        <option value="Mountenering">Mountenering</option>
+                        <option value="Hanmars">Hanmars</option>
+                        <option value="Garjas">Garjas</option>
+                    </select>
+                    <input id="nilaiInput" type="number" placeholder="Nilai" class="p-2 rounded military-border">
+                </div>
+                <button onclick="addData()" class="w-full bg-green-900 hover:bg-green-950 text-white p-2 rounded military-border">Tambah Data</button>
+            </div>
+        </div>
+
+        <!-- Student Section -->
+        <div id="studentSection" class="hidden">
+            <div class="bg-black bg-opacity-90 p-6 rounded-lg shadow-lg mb-6 military-border">
+                <h2 class="text-xl font-semibold mb-4 text-white">Hasil Nilai Siswa</h2>
+                <div class="flex gap-2 mb-4">
+                    <input id="searchInput" placeholder="Cari berdasarkan Nosis" class="p-2 rounded bg-gray-800 text-white flex-grow military-border">
+                    <button onclick="searchData()" class="bg-green-900 hover:bg-green-950 text-white p-2 rounded military-border">Cari</button>
+                    <button onclick="resetSearch()" class="bg-gray-600 hover:bg-gray-700 text-white p-2 rounded military-border">Reset</button>
+                </div>
+                <button onclick="downloadPDF()" class="bg-green-900 hover:bg-green-950 text-white p-2 rounded mb-4 military-border">Download PDF</button>
+                <div class="table-container">
+                    <table id="dataTable" class="w-full bg-black rounded-lg military-border">
+                        <thead class="military-pattern">
+                            <tr>
+                                <th class="p-2 text-white">Nama Siswa</th>
+                                <th class="p-2 text-white">Nosis</th>
+                                <th class="p-2 text-white">Pangkat</th>
+                                <th class="p-2 text-white">Studi Kasus</th>
+                                <th class="p-2 text-white">CMI</th>
+                                <th class="p-2 text-white">P3</th>
+                                <th class="p-2 text-white">Nikpur</th>
+                                <th class="p-2 text-white">Navigasi</th>
+                                <th class="p-2 text-white">Offline Map</th>
+                                <th class="p-2 text-white">Taktik Gerilya</th>
+                                <th class="p-2 text-white">OLI</th>
+                                <th class="p-2 text-white">Patroli Gunung Hutan</th>
+                                <th class="p-2 text-white">Patroli Medsus</th>
+                                <th class="p-2 text-white">Baksi</th>
+                                <th class="p-2 text-white">Baksi Lanjutan</th>
+                                <th class="p-2 text-white">Bakpur Lanjutan</th>
+                                <th class="p-2 text-white">Nikgarlat</th>
+                                <th class="p-2 text-white">UTP</th>
+                                <th class="p-2 text-white">Perkemil</th>
+                                <th class="p-2 text-white">Limed</th>
+                                <th class="p-2 text-white">Renmil</th>
+                                <th class="p-2 text-white">Ralasuntai</th>
+                                <th class="p-2 text-white">Mountenering</th>
+                                <th class="p-2 text-white">Hanmars</th>
+                                <th class="p-2 text-white">Garjas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="text-white"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-black bg-opacity-90 p-4 mt-6 text-center text-white text-sm military-border w-full">
+        Developed by Serka M. Tofan
+    </footer>
+
+    <script>
+        let data = [];
+        const { jsPDF } = window.jspdf;
+        const mataPelajaran = [
+            "Studi Kasus", "CMI", "P3", "Nikpur", "Navigasi", "Offline Map",
+            "Taktik Gerilya", "OLI", "Patroli Gunung Hutan", "Patroli Medsus",
+            "Baksi", "Baksi Lanjutan", "Bakpur Lanjutan", "Nikgarlat",
+            "UTP", "Perkemil", "Limed", "Renmil", "Ralasuntai",
+            "Mountenering", "Hanmars", "Garjas"
+        ];
+
+        function login() {
+            const password = document.getElementById('passwordInput').value;
+            document.getElementById('loginSection').classList.add('hidden');
+            if (password === 'Staf Urdik') {
+                document.getElementById('adminSection').classList.remove('hidden');
+                document.getElementById('studentSection').classList.remove('hidden');
+            } else if (password === 'Diktukba 2025') {
+                document.getElementById('studentSection').classList.remove('hidden');
+            } else {
+                alert('Kata sandi salah!');
+                document.getElementById('loginSection').classList.remove('hidden');
+            }
+        }
+
+        function addData() {
+            const pendidikan = document.getElementById('pendidikanInput').value;
+            const nama = document.getElementById('namaInput').value;
+            const nosis = document.getElementById('nosisInput').value;
+            const pangkat = document.getElementById('pangkatInput').value;
+            const kelas = document.getElementById('kelasInput').value;
+            const mataPelajaranSelected = document.getElementById('mataPelajaranInput').value;
+            const nilai = parseInt(document.getElementById('nilaiInput').value);
+
+            if (nama && nosis && pangkat && mataPelajaranSelected && !isNaN(nilai)) {
+                let existing = data.find(item => item.nosis === nosis);
+                if (!existing) {
+                    let newData = { pendidikan, nama, nosis, pangkat, kelas };
+                    mataPelajaran.forEach(mp => newData[mp] = null);
+                    data.push(newData);
+                    existing = newData;
+                }
+                existing[mataPelajaranSelected] = nilai;
+                updateTable(data);
+                clearInputs();
+            } else {
+                alert('Lengkapi semua field!');
+            }
+        }
+
+        function processExcel() {
+            const fileInput = document.getElementById('excelInput');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Pilih file Excel terlebih dahulu!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const workbook = XLSX.read(e.target.result, { type: 'binary' });
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
+                const excelData = XLSX.utils.sheet_to_json(sheet);
+
+                excelData.forEach(row => {
+                    let existing = data.find(item => item.nosis === row['Nosis']);
+                    if (!existing) {
+                        let newData = {
+                            pendidikan: row['Pendidikan'] || '',
+                            nama: row['Nama Siswa'] || '',
+                            nosis: row['Nosis'] || '',
+                            pangkat: row['Pangkat'] || '',
+                            kelas: row['Kelas/Ton/Kompi'] || ''
+                        };
+                        mataPelajaran.forEach(mp => newData[mp] = null);
+                        data.push(newData);
+                        existing = newData;
+                    }
+                    mataPelajaran.forEach(mp => {
+                        if (row[mp] !== undefined) {
+                            existing[mp] = parseInt(row[mp]);
+                        }
+                    });
+                });
+
+                updateTable(data);
+                fileInput.value = '';
+            };
+            reader.readAsBinaryString(file);
+        }
+
+        function updateTable(dataToShow) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            dataToShow.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="p-2">${item.nama}</td>
+                    <td class="p-2">${item.nosis}</td>
+                    <td class="p-2">${item.pangkat}</td>
+                    ${mataPelajaran.map(mp => `<td class="p-2">${item[mp] !== null ? item[mp] : '-'}</td>`).join('')}
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function searchData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredData = data.filter(item => item.nosis.toString().toLowerCase().includes(searchTerm));
+            updateTable(filteredData);
+        }
+
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
+            updateTable(data);
+        }
+
+        function clearInputs() {
+            document.getElementById('pendidikanInput').value = '';
+            document.getElementById('namaInput').value = '';
+            document.getElementById('nosisInput').value = '';
+            document.getElementById('pangkatInput').value = '';
+            document.getElementById('kelasInput').value = '';
+            document.getElementById('mataPelajaranInput').value = '';
+            document.getElementById('nilaiInput').value = '';
+        }
+
+        function downloadPDF() {
+            const doc = new jsPDF({ orientation: 'landscape' });
+            doc.setFontSize(16);
+            doc.text('Hasil Nilai Siswa Dodiklatpur Rindam XV/Pattimura', 20, 20);
+            doc.setFontSize(10);
+            let y = 30;
+            data.forEach((item, index) => {
+                doc.text(`${index + 1}. Nama: ${item.nama}, Nosis: ${item.nosis}, Pangkat: ${item.pangkat}`, 20, y);
+                y += 5;
+                mataPelajaran.forEach(mp => {
+                    if (item[mp] !== null) {
+                        doc.text(`${mp}: ${item[mp]}`, 30, y);
+                        y += 5;
+                    }
+                });
+                y += 5;
+                if (y > 190) {
+                    doc.addPage();
+                    y = 20;
+                }
+            });
+            doc.save('Hasil_Nilai_Siswa.pdf');
+        }
+    </script>
+</body>
+</html> 

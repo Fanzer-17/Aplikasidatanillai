@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-image: url('https://iili.io/FxvZccg.md.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: #1a2a44;
+    font-family: 'Inter', sans-serif; /* Changed to Inter as per instruction */
+    color: white;
+}
+.overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+.military-pattern {
+    background-image: linear-gradient(45deg, #1b2e1a 25%, #2f4b29 25%, #2f4b29 50%, #1b2e1a 50%, #1b2e1a 75%, #2f4b29 75%, #2f4b29);
+    background-size: 30px 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.military-border {
+    border: 3px solid #2f4b29;
+    border-radius: 8px;
+}
+.logo-app {
+    max-width: 80px;
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+button {
+    transition: transform 0.2s, background-color 0.2s;
+    border-radius: 0.5rem; /* Ensure rounded corners */
+}
+button:hover {
+    transform: scale(1.03); /* Slightly less aggressive scale for general buttons */
+}
+.table-container {
+    overflow-x: auto;
+    max-width: 100%;
+    border-radius: 0.5rem; /* Rounded corners for table container */
+}
+table {
+    min-width: 1800px; /* Adjust based on number of columns */
+    border-collapse: collapse; /* Ensure borders are clean */
+}
+th, td {
+    white-space: nowrap;
+    padding: 0.75rem; /* Increased padding for better readability */
+    border: 1px solid #2f4b29; /* Consistent border for cells */
+}
+thead th {
+    background-color: #2f4b29; /* Darker header background */
+    color: #ffffff;
+}
+tbody tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly lighter for odd rows */
+}
+tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.8); /* Darker for even rows */
+}
+input, select {
+    border-radius: 0.5rem; /* Rounded corners for inputs and selects */
+    padding: 0.5rem 0.75rem; /* Consistent padding */
+    background-color: #1a202c;
+    color: white;
+    border: 1px solid #2f4b29; /* Consistent border */
+}
+input::placeholder {
+    color: #ccc !important; /* Lighter placeholder for visibility */
+}
+select option {
+    background-color: #1a202c;
+    color: white;
+}
+footer {
+    z-index: 10;
+}
+
+/* Responsive adjustments for input fields */
+@media (max-width: 768px) {
+    .input-container.flex {
+        flex-direction: column;
+    }
+    .input-container input,
+    .input-container select {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+/* Further adjust for very small screens if necessary */
+@media (max-width: 480px) {
+    .logo-app {
+        max-width: 60px;
+    }
+    header h1 {
+        font-size: 1.5rem;
+    }
+    .p-6 {
+        padding: 1rem;
+    }
+    .text-xl {
+        font-size: 1.1rem;
+    }
+} 
